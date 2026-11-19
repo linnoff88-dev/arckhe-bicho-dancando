@@ -1,0 +1,10 @@
+kit/pose_landmarker_heavy.task
+__pycache__/
+*.mp4
+saida/
+guia/assets/*.codex.log
+guia/assets/*.png.tmp
+saida/
+ref/
+kit/*.task
+__pycache__/

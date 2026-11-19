@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bicho-dancando — make any animal dance to the moves in a video</title>
+<meta name="description" content="A kit for copying the dance from a reference video with any animal (pig, capybara, kitten) using Kling Motion Control 3.0 with a subscription. Clothes painted frame by frame, measured costs, and an INEMA.CLUB ending.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/bicho-dancando/guia/">
+<link rel="alternate" hreflang="en" href="https://inematds.github.io/bicho-dancando/guia/en/">
+<link rel="alternate" hreflang="es" href="https://inematds.github.io/bicho-dancando/guia/es/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#FACC15; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    --btn:#FACC15; --link:#FACC15;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#a16207; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    --btn:#FACC15; --link:#854d0e;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  body.light pre .k{color:#f0c070}
+  body.light h1 .amb{color:var(--txt);background:linear-gradient(transparent 55%,#FACC15 55%)}
+  body.light a:not(.btn):not(.inema):not(.pro):not(.brand){text-decoration:underline;text-decoration-color:#FACC15;text-decoration-thickness:3px}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--link);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  p code,li code,td code{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:.05em .35em;font-size:.88em}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  body.light nav{background:rgba(246,247,249,.85)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut);text-decoration:none} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px;text-decoration:none!important} .lang a.on{color:var(--amb);background:rgba(250,204,21,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--btn);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:1000px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(250,204,21,.18),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:36ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;height:auto;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:66ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.95rem;margin:0}
+  .card pre{margin:.9em 0 0}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0;margin:0}
+  pre .c{color:#7d7d8a} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:30px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--btn);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .step figure{margin:14px 0 0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .step figure img{width:100%;height:auto;display:block}
+  .step figcaption{padding:10px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .tip{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--amb);border-radius:12px;padding:14px 16px;color:var(--mut);font-size:.95rem;margin:.4em 0 .9em}
+  .tip strong{color:var(--txt)}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .ex3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr} .ex3{grid-template-columns:1fr 1fr}}
+  @media(max-width:420px){.ex3{grid-template-columns:1fr}}
+  .card p a{overflow-wrap:anywhere}
+  .ex3 a{display:block;text-decoration:none!important;color:inherit}
+  .ex3 a:hover figure{border-color:var(--amb)}
+  .ex figure,.ex3 figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img,.ex3 figure img{width:100%;height:auto;display:block}
+  .ex figcaption,.ex3 figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  @media(max-width:640px){table{min-width:0!important;font-size:.9rem} table,tbody,tr,td{display:block} tr:first-child{display:none} tr{border-bottom:1px solid var(--line);padding:10px 0} tr:last-child{border-bottom:none} td{border:none!important;padding:3px 14px!important} td:last-child{color:var(--amb);font-weight:600}}
+  .tbl{width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+  table{width:100%;border-collapse:collapse;font-size:.94rem;min-width:560px}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:Sora;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);background:var(--bg2)}
+  tr:last-child td{border-bottom:none}
+  td strong{color:var(--txt)}
+  .lim li{margin:.5em 0;color:var(--mut)} .lim li strong{color:var(--txt)}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:4px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="emoji">🐷</span> bicho-dancando</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#oque">What it is</a>
+    <a class="sec" href="#fluxo">How it works</a>
+    <a class="sec" href="#guia">User guide</a>
+    <a class="sec" href="#exemplos">Examples</a>
+    <a class="sec" href="#limites">Limitations</a>
+    <span class="lang"><a href="../">PT</a><a class="on" href="./">EN</a><a href="../es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+    <a class="btn" href="https://github.com/inematds/bicho-dancando" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">AI video kit · Kling subscription</span>
+      <h1>Any animal <span class="amb">dances</span> to the moves in your video</h1>
+      <p class="lead">Choose a dance video, describe the animal, and the kit makes a pig, a capybara, or a kitten repeat the same moves.</p>
+      <div class="cta">
+        <a class="btn" href="#guia">Get started</a>
+        <a class="btn ghost" href="https://github.com/inematds/bicho-dancando" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+    <figure><img src="../assets/banner-en.jpg" alt="Banner: any animal can dance, with a pig and a capybara dancing on a stage"></figure>
+  </div>
+</header>
+
+<section id="resumo" class="resumo"><div class="wrap">
+  <span class="chip">In brief</span>
+  <p>bicho-dancando is a script kit for anyone making short videos who wants an animal to dance just like a reference video. You provide a video of someone dancing and a phrase describing the animal; the kit paints clothes on the dancer, creates an image of the animal standing upright, and tells Kling (an AI video generator) to copy the moves. At the end, it adds the music and an ending with INEMA.CLUB text. You need a Kling subscription with its command-line tool installed, Python, and ffmpeg.</p>
+</div></section>
+
+<section id="oque"><div class="wrap">
+  <span class="chip">What it is</span>
+  <h2>The dance comes from the video; the animal comes from your description</h2>
+  <p class="sub">Kling has a mode called Motion Control: it takes the movement from a video and applies it to a still image. The kit prepares the video so this mode can accept it, then handles everything in a single call.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="../assets/banner-grade-en.jpg" alt="Banner showing the steps: reference video, painted clothes, standing animal, copied dance, music, and ending" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3">
+    <div class="card"><h3>💃 Moves copied from the reference</h3><p>With Motion Control 3.0, the animal follows the reference choreography almost frame by frame, instead of performing an invented dance.</p></div>
+    <div class="card"><h3>👕 The painted-clothes trick</h3><p>Kling rejects videos of bodies that look nude. The kit paints a T-shirt and shorts on the dancer, frame by frame, so the video passes.</p></div>
+    <div class="card"><h3>🎬 Ready to post</h3><p>You get a vertical 9:16 MP4 with the reference music and a final 4.5 seconds showing "construindo no INEMA.CLUB · baixa o kit" (building on INEMA.CLUB · download the kit), written one letter at a time.</p></div>
+  </div>
+</div></section>
+
+<section id="fluxo"><div class="wrap">
+  <span class="chip">How it works</span>
+  <h2>Five steps, one call</h2>
+  <p class="sub">The <code>kit/dancar.sh</code> script handles steps 2 through 5 automatically. You only choose the video and describe the animal.</p>
+  <div class="flow">
+    <span>1 · Dance video</span><span class="arr">→</span>
+    <span>2 · Painted clothes (vestir.py)</span><span class="arr">→</span>
+    <span>3 · Image of the animal standing upright</span><span class="arr">→</span>
+    <span>4 · Kling copies the dance</span><span class="arr">→</span>
+    <span>5 · Music + ending</span>
+  </div>
+  <h3 style="margin:2.2em 0 .8em;font-size:1.15rem">Three ways to do it, with measured costs (24 s, 720p)</h3>
+  <div class="tbl"><table>
+    <tr><th>Version</th><th>How</th><th>Move fidelity</th><th>Cost</th></tr>
+    <tr><td><strong>Copied dance</strong> (recommended)</td><td>reference with painted clothes + Kling Motion Control 3.0</td><td>almost frame by frame</td><td>216 Kling credits</td></tr>
+    <tr><td><strong>Kling 4.0 by text prompt</strong> (for comparison only; no script in the kit)</td><td>animal image + choreography described in the prompt</td><td>free-form moves</td><td>240 Kling credits</td></tr>
+    <tr><td><strong>Agnes</strong></td><td>4 poses + 3 clips of 8 s transitioning from pose to pose</td><td>free-form moves, may drift from the scene</td><td>free</td></tr>
+  </table></div>
+</div></section>
+
+<section id="pre"><div class="wrap">
+  <span class="chip">Requirements</span>
+  <h2>What needs to be installed</h2>
+  <p class="sub">Everything runs on your computer except video generation, which is done in Kling through your subscription. Linux or macOS with a terminal.</p>
+  <div class="grid g3">
+    <div class="card"><h3>Kling subscription</h3><p>The official Kling command-line tool, logged into your account. Login opens the browser and waits for just 5 minutes.</p><pre><span class="k">npm</span> i -g @klingai/cli-global
+<span class="k">kling</span> login</pre></div>
+    <div class="card"><h3>Python 3 and ffmpeg</h3><p>To paint the clothes, assemble the ending, and add the music. The pose model (30 MB) downloads automatically the first time.</p><pre><span class="k">python3</span> -m pip install "mediapipe>=0.10" opencv-python pillow
+<span class="k">ffmpeg</span> -version</pre></div>
+    <div class="card"><h3>Ending font</h3><p>Unzip the file downloaded from <a href="https://fonts.google.com/specimen/Montserrat" target="_blank" rel="noopener">fonts.google.com/specimen/Montserrat</a>, then run the commands below from inside the unzipped folder. <code>kit/fecho.py</code> uses the Montserrat Black font at this exact path, and only at the very end of the run, after spending credits: check first.</p><pre><span class="k">mkdir</span> -p ~/.local/share/fonts
+<span class="k">cp</span> static/Montserrat-Black.ttf ~/.local/share/fonts/
+<span class="k">ls</span> ~/.local/share/fonts/Montserrat-Black.ttf   <span class="c"># check: the file should be listed</span></pre></div>
+  </div>
+  <p class="mut" style="margin-top:1.4em">Download the kit:</p>
+<pre><span class="k">git</span> clone https://github.com/inematds/bicho-dancando
+<span class="k">cd</span> bicho-dancando</pre>
+</div></section>
+
+<section id="guia"><div class="wrap">
+  <span class="chip">Step-by-step user guide</span>
+  <h2>From the reference video to a dancing animal</h2>
+  <p class="sub">Run the commands from inside the <code>bicho-dancando</code> folder. The result goes in <code>saida/&lt;nome&gt;/</code>.</p>
+
+  <div class="step"><div class="b">1</div><div>
+    <h3>Choose the reference video</h3>
+    <p>Any MP4 showing a person (or character) dancing full-body with a stationary camera: a video of yourself, recorded on your phone, or downloaded with <code>yt-dlp</code>. The tests used 24 s; the longer the video, the more credits it costs. If the dancer leaves the frame, the animal will too. Save it as <code>ref/video.mp4</code>.</p>
+<pre><span class="k">mkdir</span> -p ref   <span class="c"># put the dance video.mp4 here</span></pre>
+  </div></div>
+
+  <div class="step"><div class="b">2</div><div>
+    <h3>Run everything at once</h3>
+    <p>Provide the video, a short name, and an English description of the animal (Kling understands it better). The script paints the clothes, creates the animal, copies the dance, adds the music, and adds the ending.</p>
+<pre><span class="k">kit/dancar.sh</span> ref/video.mp4 capivara <span class="s">"chubby capybara diva with a pink feather boa and red lipstick"</span>
+<span class="c"># ready: saida/capivara/capivara-final.mp4</span></pre>
+    <div class="tip"><strong>Already have an image of the animal?</strong> Pass the file as the fourth argument and the script skips image creation: <code>kit/dancar.sh ref/video.mp4 porco "chubby pink pig" porco.png</code>. A 24 s run costs about 220 credits (4 for the image + 216 for the dance); <code>--poll 2300</code> in the script is the maximum wait time, in seconds. Each run can take up to about 40 minutes; the terminal waits while Kling works.</div>
+  </div></div>
+
+  <div class="step"><div class="b">3</div><div>
+    <h3>What the script does behind the scenes</h3>
+    <p>You don't need to run any of this by hand; this is to help you understand what happens (and where credits, Kling subscription currency, are spent).</p>
+    <ul class="lim">
+      <li><strong>Painted clothes (free, on your computer).</strong> <code>kit/vestir.py</code> uses MediaPipe (a Google library that detects the body in an image) to paint a T-shirt and shorts on each frame and saves <code>referencia-vestida.mp4</code>. Without this, Kling rejects the video with <code>AGENT.FileCensorshipUnsafe</code>. A simple line drawing (<code>kit/boneco.py</code>) passes this check, but fails with "No valid characters detected". Painted clothes pass both checks.</li>
+      <li><strong>Standing animal (4 credits for 2 images).</strong> If you didn't provide an image, Kling creates a vertical 9:16 full-body photo of the animal standing on two legs (<code>bicho.png</code>). If you use your own image, choose an animal in a human-like pose, with its arms and legs clearly away from its body: with the "standing still" capybara, its legs close to its body, Kling returned "No valid characters detected in the image" (without charging); the same capybara in a dance pose worked.</li>
+      <li><strong>Copied dance (216 credits for 24 s at 720p).</strong> Motion Control 3.0 applies the movement from the dressed reference to the animal (<code>--motionDirection motion_direction</code> = follow the video's movement). The prompt asks for "natural fur and skin with no clothes" so the painted clothes don't transfer to the animal. Cost increases with the reference video's duration.</li>
+      <li><strong>Music and ending (free).</strong> ffmpeg combines the reference audio, and <code>kit/fecho.py</code> darkens the final 4.5 s and writes "construindo no / INEMA.CLUB / baixa o kit" (building on / INEMA.CLUB / download the kit), one letter at a time, in yellow and white.</li>
+    </ul>
+    <figure><img src="../assets/referencia-vestida.jpg" alt="Sheet of 12 frames of the reference dancer with a blue T-shirt and red shorts painted over the body" loading="lazy"><figcaption>The "dressed" reference from the test. The dancer was already a pig; the kit paints clothes on whoever is dancing, person or character.</figcaption></figure>
+    <p style="margin-top:1em">Want to paint the clothes only, to see how it looks before spending credits?</p>
+<pre><span class="k">python3</span> kit/vestir.py ref/video.mp4 vestida.mp4</pre>
+  </div></div>
+
+  <div class="step"><div class="b">4</div><div>
+    <h3>Add an ending to any of your videos</h3>
+    <p>The ending also runs on its own, on any vertical 720×1280 video. The last number is the ending duration in seconds.</p>
+<pre><span class="k">python3</span> kit/fecho.py meu-video.mp4 meu-video-fecho.mp4 4.5</pre>
+  </div></div>
+
+  <div class="step"><div class="b">5</div><div>
+    <h3>Check before posting</h3>
+    <p>Create a frame sheet (12 video stills in one image) and check the face, background, and hands (paws). If anything looks off, run the same command from step 2 again: the script reuses <code>referencia-vestida.mp4</code> already in <code>saida/&lt;nome&gt;/</code>. If it looks good, post wherever you like: Reels, TikTok, Shorts.</p>
+<pre><span class="k">ffmpeg</span> -i saida/capivara/capivara-final.mp4 -vf <span class="s">"fps=1/2,scale=200:-1,tile=6x2"</span> -frames:v 1 folha.jpg   <span class="c"># frame sheet</span></pre>
+  </div></div>
+</div></section>
+
+<section id="exemplos"><div class="wrap">
+  <span class="chip">Examples</span>
+  <h2>Pig, capybara, and kitten</h2>
+  <p class="sub">All three animals dancing to the same routine, each for 216 credits. Click an image to watch the video on YouTube.</p>
+  <div class="ex3">
+    <a href="https://www.youtube.com/watch?v=3jfNlJ4DduI" target="_blank" rel="noopener"><figure><img src="../assets/porco.jpg" alt="Pink pig standing upright with bowl-cut hair in a dirt yard" loading="lazy"><figcaption>▶ Pig with bowl-cut hair</figcaption></figure></a>
+    <a href="https://www.youtube.com/watch?v=opnakJZBDro" target="_blank" rel="noopener"><figure><img src="../assets/capivara.jpg" alt="Capybara standing upright with a pink feather boa" loading="lazy"><figcaption>▶ Diva capybara with a pink boa</figcaption></figure></a>
+    <a href="https://www.youtube.com/watch?v=aivt5jwgGX4" target="_blank" rel="noopener"><figure><img src="../assets/gatinha.jpg" alt="Orange and white kitten standing upright with a pink bow, one paw raised" loading="lazy"><figcaption>▶ Cute kitten</figcaption></figure></a>
+  </div>
+  <div class="ex">
+    <figure><img src="../assets/resultado-porco.jpg" alt="Sheet of 12 frames of the pig dancing the same moves as the reference" loading="lazy"><figcaption>Result: the pig repeats the moves from the dressed reference (Kling Motion Control 3.0, 216 credits).</figcaption></figure>
+    <figure><img src="../assets/boneco-tracos.jpg" alt="Frame sheet of a line drawing performing the dance" loading="lazy"><figcaption>The line drawing (<code>kit/boneco.py</code>): useful for studying the choreography, but Kling doesn't recognize it as a character.</figcaption></figure>
+  </div>
+
+  <h3 style="margin:2.4em 0 .5em;font-size:1.15rem">Free variant with Agnes</h3>
+  <p class="mut" style="max-width:70ch"><code>kit/agnes_poses.py</code> creates the pig with Agnes: 1 anchor image + 3 poses derived from it (so it's the same animal) + 3 clips of 8 s transitioning from pose to pose. The moves are free-form, not copied. In one of the 3 clips, the scene drifted (the background changed and the animal turned its back): check the clips and redo only the one that looks off. Requires the <a href="https://github.com/inematds/videos-agnes" target="_blank" rel="noopener">videos-agnes</a> project cloned into <code>~/projetos/videos-agnes</code> and an Agnes AI API key in the <code>AGNES_API_KEY</code> variable (the videos-agnes guide explains how to get one).</p>
+  <figure style="margin:16px 0 0;border-radius:14px;overflow:hidden;border:1px solid var(--line)"><img src="../assets/agnes-poses.jpg" alt="Four poses of the pig generated by Agnes" loading="lazy" style="width:100%;display:block"></figure>
+</div></section>
+
+<section id="limites"><div class="wrap">
+  <span class="chip">Limitations</span>
+  <h2>What we know can go wrong</h2>
+  <p class="sub">Measured in the kit's tests.</p>
+  <ul class="lim">
+    <li><strong>Kling decides what counts as a character.</strong> A simple line drawing doesn't count; a photorealistic animal standing upright does.</li>
+    <li><strong>The animal image pose matters.</strong> An animal standing still, with its legs close to its body, returned "No valid characters detected in the image" (without charging). Use an image with arms and legs away from the body, in a dance pose.</li>
+    <li><strong>The framing comes from the reference.</strong> If the dancer leaves the frame, the animal will too. Prefer a stationary camera and a full-body shot.</li>
+    <li><strong>The CLI login expires.</strong> <code>kling login</code> opens the browser and waits only 5 minutes for you to return.</li>
+  </ul>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Kling Motion Control 3.0</div><div class="pill">MediaPipe</div><div class="pill">Python + ffmpeg</div><div class="pill">Agnes</div>
+    <p style="margin-top:18px">bicho-dancando · open kit ·
+      <a href="https://github.com/inematds/bicho-dancando">github.com/inematds/bicho-dancando</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var KEY='bicho-dancando-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; } }catch(e){}
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>
