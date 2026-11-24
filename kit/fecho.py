@@ -1,5 +1,5 @@
-"""Fecho dos reels: nos últimos segundos o vídeo escurece e o texto se constrói letra a letra
-("construindo no / INEMA.CLUB / baixa o kit"). Uso: python3 fecho.py <entrada.mp4> <saida.mp4> [segundos=4.5]"""
+"""Fecho dos reels: nos Ãºltimos segundos o vÃ­deo escurece e o texto se constrÃ³i letra a letra
+("construindo no / ARCKHÉ AI / baixa o kit"). Uso: python3 fecho.py <entrada.mp4> <saida.mp4> [segundos=4.5]"""
 import os, subprocess, sys, tempfile
 from PIL import Image, ImageDraw, ImageFont
 
@@ -8,7 +8,7 @@ SEG = float(sys.argv[3]) if len(sys.argv) > 3 else 4.5
 W, H, FPS = 720, 1280, 30
 FONT = os.path.expanduser('~/.local/share/fonts/Montserrat-Black.ttf')
 AMARELO, BRANCO = (250, 204, 21, 255), (255, 255, 255, 255)
-LINHAS = [('construindo no', 58, BRANCO), ('INEMA.CLUB', 92, AMARELO), ('baixa o kit', 70, BRANCO)]
+LINHAS = [('construindo no', 58, BRANCO), ('ARCKHÉ AI', 92, AMARELO), ('baixa o kit', 70, BRANCO)]
 
 dur = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', src],
                            capture_output=True, text=True).stdout)
@@ -35,7 +35,7 @@ for f in range(n):
         if parte:
             d.text((x, y), parte, font=fnt, fill=cor, stroke_width=6, stroke_fill=(0, 0, 0, 255))
         if not cursor_feito and k < len(texto) and escuro > 0.3:
-            cursor_feito = True                               # cursor piscando na linha que está sendo escrita
+            cursor_feito = True                               # cursor piscando na linha que estÃ¡ sendo escrita
             if (f // 8) % 2 == 0:
                 cx = x + d.textlength(parte, font=fnt) + 4
                 d.rectangle([cx, y + size * 0.1, cx + 8, y + size * 1.05], fill=AMARELO)

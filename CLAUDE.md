@@ -1,7 +1,7 @@
-# CLAUDE.md — bicho-dancando
+﻿# CLAUDE.md â€” bicho-dancando
 
-Kit: dança de um vídeo → qualquer bicho (Kling motion control + referência vestida). Processo no README.
-Conta/autor: inematds <inematds@gmail.com>.
+Kit: danÃ§a de um vÃ­deo â†’ qualquer bicho (Kling motion control + referÃªncia vestida). Processo no README.
+Conta/autor: linnoff88-dev <linnoff88-dev@gmail.com>.
 
 ## Self-learning
 

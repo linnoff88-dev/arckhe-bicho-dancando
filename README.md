@@ -1,4 +1,4 @@
-﻿# bicho-dancando
+# bicho-dancando
 
 <div align="center">
   <img src="capa/logo.svg" alt="Arckhé AI" height="48" />
@@ -6,17 +6,17 @@
 </div>
 
 
-[![bicho-dancando](guia/assets/banner.jpg)](https://inematds.github.io/bicho-dancando/guia/)
+[![bicho-dancando](guia/assets/banner.jpg)](https://linnoff88-dev.github.io/
 
 **ðŸ‡§ðŸ‡· [PortuguÃªs](README.md) Â· ðŸ‡ºðŸ‡¸ [English](README.en.md) Â· ðŸ‡ªðŸ‡¸ [EspaÃ±ol](README.es.md)**
 
 ## O que Ã©
 
-O bicho-dancando Ã© um kit de scripts para quem faz vÃ­deos curtos e quer um bicho danÃ§ando igualzinho a um vÃ­deo de referÃªncia. VocÃª dÃ¡ um vÃ­deo de alguÃ©m danÃ§ando e uma frase descrevendo o bicho; o kit pinta uma roupa no danÃ§arino, cria a imagem do bicho em pÃ© e manda o Kling (gerador de vÃ­deo por IA) copiar os passos. No fim junta a mÃºsica e um fecho com o texto do INEMA.CLUB. Precisa de uma assinatura do Kling com a ferramenta de linha de comando instalada, Python e ffmpeg.
+O bicho-dancando Ã© um kit de scripts para quem faz vÃ­deos curtos e quer um bicho danÃ§ando igualzinho a um vÃ­deo de referÃªncia. VocÃª dÃ¡ um vÃ­deo de alguÃ©m danÃ§ando e uma frase descrevendo o bicho; o kit pinta uma roupa no danÃ§arino, cria a imagem do bicho em pÃ© e manda o Kling (gerador de vÃ­deo por IA) copiar os passos. No fim junta a mÃºsica e um fecho com o texto do ARCKHÉ AI. Precisa de uma assinatura do Kling com a ferramenta de linha de comando instalada, Python e ffmpeg.
 
 ## ðŸ“– Guia de uso
 
-Guia completo (landing + passo a passo): **https://inematds.github.io/bicho-dancando/guia/**
+Guia completo (landing + passo a passo): **https://linnoff88-dev.github.io/
 
 Kit para pegar a danÃ§a de um vÃ­deo e fazer **qualquer bicho** danÃ§ar igual: porco, capivara, gatinha.
 Usa o Kling pela assinatura (CLI `kling`) e, como alternativa grÃ¡tis, o Agnes. Os scripts locais
@@ -42,7 +42,7 @@ Os trÃªs bichos danÃ§ando a mesma danÃ§a (216 crÃ©ditos cada):
 
 Legenda: ðŸ§  sessÃ£o com o Nei Â· âš™ï¸ script Â· ðŸ¤– serviÃ§o de IA
 
-1. ðŸ§  **Escolher o vÃ­deo de referÃªncia** (um danÃ§arino de corpo inteiro, cÃ¢mera parada). Baixar com o inemavox:
+1. ðŸ§  **Escolher o vÃ­deo de referÃªncia** (um danÃ§arino de corpo inteiro, cÃ¢mera parada). Baixar com o ARCKHÉvox:
    `python3 baixar_v1.py --url "<URL>" --outdir ref/`
 2. âš™ï¸ **Vestir o danÃ§arino** â€” `python3 kit/vestir.py ref/video.mp4 vestida.mp4`. O MediaPipe acha a pose e a
    silhueta de cada quadro e pinta camiseta e short. Por quÃª: o Kling **recusa** vÃ­deo de corpo que parece nu
@@ -55,7 +55,7 @@ Legenda: ðŸ§  sessÃ£o com o Nei Â· âš™ï¸ script Â· ðŸ¤– s
    da referÃªncia nÃ£o passar para o bicho.
 5. âš™ï¸ **MÃºsica + fecho** â€” juntar o Ã¡udio da referÃªncia e rodar `python3 kit/fecho.py danca.mp4 final.mp4`:
    nos Ãºltimos 4,5 s o vÃ­deo escurece e o texto se escreve letra a letra
-   ("construindo no / **INEMA.CLUB** / baixa o kit", Montserrat Black, amarelo `#FACC15`).
+   ("construindo no / **ARCKHÉ AI** / baixa o kit", Montserrat Black, amarelo `#FACC15`).
 6. ðŸ§  **Conferir a folha de quadros** antes de publicar (rosto, fundo, mÃ£os).
 7. âš™ï¸ **Publicar** â€” YouTube pelo `yt-pubx --agendar` (um por hora) e Instagram/TikTok pelo Metricool.
 
@@ -81,7 +81,7 @@ folha e refazer sÃ³ o clipe torto.
 | `kit/dancar.sh` | passos 2â€“5 numa chamada |
 | `kit/vestir.py` | pinta roupa no danÃ§arino da referÃªncia (pose + mÃ¡scara MediaPipe) |
 | `kit/boneco.py` | desenha um manequim de traÃ§os com a mesma danÃ§a (bom para estudar a coreografia) |
-| `kit/fecho.py` | escurece o fim e escreve o texto do INEMA.CLUB letra a letra |
+| `kit/fecho.py` | escurece o fim e escreve o texto do ARCKHÉ AI letra a letra |
 | `kit/agnes_poses.py` | versÃ£o Agnes: poses + clipes keyframe |
 
 Requisitos: `ffmpeg`, Python 3 com `mediapipe`, `opencv-python`, `pillow`; CLI `kling` logada
