@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Faz qualquer bicho dançar a mesma dança de um vídeo de referência (Kling pela assinatura).
-# uso: kit/dancar.sh <video-referencia.mp4> <nome> "<descrição do bicho em inglês>" [imagem-pronta.png]
+# uso: kit/dancar.sh <video-referencia.mp4> <nome> "<descriçêo do bicho em inglês>" [imagem-pronta.png]
 #   1) vestir.py pinta roupa no dançarino da referência (o Kling recusa corpo que parece nu)
-#   2) kling text_to_image cria o bicho em pé (9:16), se não vier imagem pronta
+#   2) kling text_to_image cria o bicho em pé (9:16), se nêo vier imagem pronta
 #   3) kling motion_control copia a dança da referência para o bicho
 #   4) põe a música da referência e o fecho "construindo no INEMA.CLUB · baixa o kit"
 # Saída: saida/<nome>/<nome>-final.mp4
