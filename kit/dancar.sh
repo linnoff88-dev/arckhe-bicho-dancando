@@ -4,7 +4,7 @@
 #   1) vestir.py pinta roupa no dançarino da referência (o Kling recusa corpo que parece nu)
 #   2) kling text_to_image cria o bicho em pé (9:16), se nêo vier imagem pronta
 #   3) kling motion_control copia a dança da referência para o bicho
-#   4) põe a música da referência e o fecho "construindo no INEMA.CLUB · baixa o kit"
+#   4) põe a música da referência e o fecho "construindo no ARCKHÉ AI · baixa o kit"
 # Saída: saida/<nome>/<nome>-final.mp4
 set -euo pipefail
 REF="$(realpath "$1")"; NOME="$2"; BICHO="$3"; IMG="${4:+$(realpath "$4")}"
